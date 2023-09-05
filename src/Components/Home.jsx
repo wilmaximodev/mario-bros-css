@@ -11,14 +11,14 @@ function Home() {
   };
   
   return (
-    <>
+    <div className='homepage'>
+      <label htmlFor="play-button" name="button-play">
+        <button id="play-button" className="btn" onClick={ () => handleClick('play') }>Play</button>
+      </label>
       <label htmlFor="about-button" name="button-about">
         <button id="about-button" onClick={ () => handleClick('about') }>About</button>
       </label>
-      <label htmlFor="play-button" name="button-play">
-        <button id="play-button" onClick={ () => handleClick('play') }>Play</button>
-      </label>
-    </>
+    </div>
   );
 }
 
