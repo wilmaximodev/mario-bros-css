@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import Home from '../Components/Home';
 import About from '../Components/About';
 import Play from '../Components/Play';
+import GameOver from '../Components/GameOver';
 
 function MyRoutes() {
   return (
@@ -10,6 +11,7 @@ function MyRoutes() {
       <Route path='/' element={ <Home /> } />
       <Route path='/about' element={ <About /> } />
       <Route path='/play' element={ <Play /> } />
+      <Route path='/over' element={ <GameOver /> } />
     </Routes>
   );
 }

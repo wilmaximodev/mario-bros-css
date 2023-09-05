@@ -1,8 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import '../App.css';
+import Mario from '../img/mario.gif';
+import Pipe from '../img/pipe.png';
+import GameOver from '../img/mario-die.gif';
+import Clouds from '../img/clouds.png';
+import { useNavigate } from 'react-router-dom';
 
 function Play() {
-  const [playing, setPlaying] = useState(false);
+  const navigate = useNavigate();
 
   const jump = () => {
     const mario = document.querySelector('.mario');
@@ -16,30 +21,37 @@ function Play() {
     window.addEventListener('keydown', jump);
   });
 
-  const runningGame = (
-    <div className='running'>
-      <img className='pipe' src='https://luizfelipe9627-super-mario.netlify.app/assets/image/pipe-game.png' alt="pipeImg" />
-      <img className='mario' src='https://i.pinimg.com/originals/3c/f4/42/3cf442eb0574a06127a2db3a6bd6e633.gif' alt='Mario' />
-    </div>
-  );
+  const loop = setInterval(() => {
+    const pipe = document.querySelector('.pipe');
+    const mario = document.querySelector('.mario');
+    const pipePosition = pipe.offsetLeft;
+    const marioPosition = +window.getComputedStyle(mario).bottom.replace('px', '');
 
-  const notRunningGame = (
-    <>
-      <label htmlFor="init-game">
-        <button id="init-game" onClick={ () => setPlaying(true) }>Play Game Now!</button>
-      </label>
-      <label htmlFor="exit-game">
-        <button id="exit-game">Exit!</button>
-      </label>
-    </>
-  );
+    if (pipePosition <= 120  && pipePosition > 0 && marioPosition < 80) {
+      pipe.style.animation = 'none';
+      pipe.style.left = `${pipePosition}px`;
+
+      mario.style.animation = 'none';
+      mario.style.bottom = `${marioPosition}px`;
+
+      mario.src = GameOver;
+      mario.style.width = '75px';
+      mario.style.marginLeft = '50px';
+
+      setTimeout(() => {
+        navigate('/over');
+      }, 2000);
+
+      clearInterval(loop);
+    } 
+  }, 10);
 
   return (
-    <>
-      {
-        !playing ? notRunningGame : runningGame
-      }
-    </>
+    <div className='running'>
+      <img className='clouds' src={ Clouds } alt="clouds" />
+      <img className='pipe' src={ Pipe } alt="pipeImg" />
+      <img className='mario' src={ Mario } alt='Mario' />
+    </div>
   );
 }
 
